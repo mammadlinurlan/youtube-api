@@ -1,0 +1,4 @@
+.videoList{
+    display: flex;
+    flex-wrap: wrap;
+}
