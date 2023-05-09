@@ -1,13 +1,13 @@
 export interface IVideo {
     etag: String,
     id: {
-        videoId: String
+        videoId: string
     }
     snippet: {
-        channelId: String,
-        channelTitle: String,
-        description: String,
-        title: String,
+        channelId: string,
+        channelTitle: string,
+        description: string,
+        title: string,
         publishTime: Date,
         thumbnails: {
             default: {

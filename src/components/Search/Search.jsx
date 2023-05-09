@@ -4,14 +4,14 @@ import { useRef } from "react";
 export const Search = (props) => {
     const inputValue = useRef('')
     return(
-        <form onSubmit={(e) => {
+        <form className="d-flex" onSubmit={(e) => {
             e.preventDefault();
             props.onSearch(inputValue.current)
         }}>
-            <input onChange={(e) => {inputValue.current = e.target.value
+            <input width='90%' className="form-control" onChange={(e) => {inputValue.current = e.target.value
             console.log(inputValue.current)
             }} placeholder="Search" />
-            <button>SEARCH</button>
+            <button width="10%" className="btn btn-primary">SEARCH</button>
         </form>
     )
 }
