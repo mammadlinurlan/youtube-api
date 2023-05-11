@@ -5,6 +5,7 @@ import { Search } from './components/Search/Search';
 import { VideoList } from './components/VideoList/VideoList';
 import { IVideo, IVideos } from './interfaces';
 import { Test } from './components/Test';
+import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   const [videoList, setVideoList] = React.useState([] as IVideo[])
@@ -27,9 +28,9 @@ function App() {
       <Router>
       <Search onSearch={onSearch} />
         <Routes>
-          <Route path='/test' element={<Test videos={videoList} />} />
+          {/* <Route path='/test' element={<Test videos={videoList} />} /> */}
         </Routes>
-        {/* <VideoList videoList={videoList} /> */}
+        <VideoList videoList={videoList} />
       </Router>
     </>
 

@@ -8,7 +8,7 @@ export interface IVideo {
         channelTitle: string,
         description: string,
         title: string,
-        publishTime: Date,
+        publishTime: string,
         thumbnails: {
             default: {
                 url: String,
@@ -31,4 +31,8 @@ export interface IVideo {
 
 export interface IVideos {
     videoList: IVideo[]
+}
+export interface IChannel{
+    channelId : string,
+    channelPP : string
 }

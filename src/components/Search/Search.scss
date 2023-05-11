@@ -1,0 +1,30 @@
+$green: #1ECD97;
+.searchButton{
+    border: 0px;
+    background-color: $green;
+    color: white;
+    width: 12% !important;
+    letter-spacing: 1.5px;
+    transition: 0.3s ease-in-out;
+    &:hover{
+        background-color: #16a085;
+    }
+    border-top-right-radius: 0.375rem !important;
+    border-bottom-right-radius: 0.375rem !important;
+
+}
+input{
+    width: 88% !important;
+    &:focus{
+        outline: none !important;
+    }
+    font-weight: 700;
+}
+.form-control:focus {
+    border-color: inherit !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+form{
+    margin-top: 10px;
+}
