@@ -1,0 +1,94 @@
+.bottomPlayer{
+    height: 90px;
+    background-color: black;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    display: flex;
+    .leftPlayerSide{
+        background-color: black;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        img{
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+        }
+        p{
+            margin: 0;
+        }
+        .title{
+            color: white;
+            font-size: 14.5px;
+            font-weight: 500;
+        }
+        .author{
+            font-size: 11px;
+            font-weight: 600;
+            color: #aea5a5;
+        }
+        .playerLeftInfo{
+            margin-left: 5%;
+        }
+    }
+    .rightPlayerSide{
+        background-color: black;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        svg{
+            color: rgb(165, 165, 165);
+            font-size: 20px;
+            transition: 0.15s ease-in-out;
+            &:hover{
+                color: white;
+            }
+            
+        }
+    }
+    .centerPlayerSide{
+        background-color: black;
+        height: 100%;
+        .bottom{
+            justify-content: space-around;
+            align-items: center;
+            p{
+                margin: 0;
+                font-size: 12px;
+                font-weight: 400;
+                color: #e8e1e1;
+            }
+            height: 50%;
+            display: flex;
+            .playerBar{
+                width: 85%;
+                height: 5px;
+                background-color: #aea5a5;
+                border-radius: 2px;
+            }
+        }
+        .top{
+            height: 50%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+          
+            svg{
+                color: rgb(165, 165, 165);
+                font-size: 35px;
+                transition: 0.15s ease-in-out;
+                &:hover{
+                    color: white;
+                }
+                &:nth-child(2){
+                    color: white;
+                }
+                &:nth-child(2):hover{
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+}

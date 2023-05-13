@@ -8,7 +8,7 @@
   
 }
 body{
-  background-color: #1e272e !important ;
+  background-color: hsl(0, 0%, 9%) !important ;
 }
 .searchInput{
   border-top-right-radius:0 !important ;

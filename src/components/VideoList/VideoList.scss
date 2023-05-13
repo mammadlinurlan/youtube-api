@@ -1,0 +1,30 @@
+.videoWrapper{
+    .videoList{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    img{
+        height: 200px;
+        object-fit: cover;
+        width: 360px;
+        border-radius: 15px;
+    }
+    .videoTitle{
+        color: white;
+        font-size: 20px;
+        font-weight:500;
+        margin: 0;
+    }
+    .publishTime{
+        color: #AAAAAA;
+        font-size: 15px;
+        font-weight: 500;
+        margin: 0;
+    }
+    .channelInfos{
+        color: #AAAAAA;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+    }
+}

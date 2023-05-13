@@ -36,3 +36,23 @@ export interface IChannel{
     channelId : string,
     channelPP : string
 }
+export interface IDuration{
+    videoId : string,
+    duration : number
+}
+export interface IPlayer{
+    author : string,
+    name : string,
+    videoId : string,
+    coverUrl : string,
+    duration : string,
+    isPlaying : boolean,
+    isMuted : boolean,
+    mute : any,
+    unmute : any,
+    index : any,
+    play : any,
+    pause : any
+    // play : ()=>{},
+    // pause : ()=>{}
+}
