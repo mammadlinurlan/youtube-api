@@ -181,12 +181,15 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
 
 
 
-    // useEffect(() => {
-    //     console.log(playerInfoContext.playerInfo)
-    //     _.isEmpty(playerInfoContext.playerInfo) ? console.log('context empty')
-    //     :
-    //     currentTimeHandler(playerInfoContext.playerInfo?.index)
-    // }, [playerInfoContext.playerInfo])
+    useEffect(() => {
+        
+        _.isEmpty(playerInfoContext.playerInfo) ? 
+        youtubeREF.current ? youtubeREF.current.forEach(v => {
+            v.internalPlayer.stopVideo()
+        }) : console.log('no')
+        :
+        console.log('context empty')
+    }, [playerInfoContext.playerInfo])
     useEffect(() => {
         videoList.forEach((v) => {
             var url;
