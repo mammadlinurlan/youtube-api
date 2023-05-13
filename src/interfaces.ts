@@ -52,7 +52,8 @@ export interface IPlayer{
     unmute : any,
     index : any,
     play : any,
-    pause : any
+    pause : any,
+    timer : any
     // play : ()=>{},
     // pause : ()=>{}
 }

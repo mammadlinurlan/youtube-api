@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import youtubeApi from './api/youtube'
 import { Search } from './components/Search/Search';
@@ -19,9 +19,10 @@ function App() {
         q: keyword
       }
     })
-    console.log(response.data.items)
     setVideoList(response.data.items)
   }
+
+ 
   return (
     <>
       <Router>

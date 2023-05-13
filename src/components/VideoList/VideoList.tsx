@@ -10,6 +10,7 @@ var _ = require('lodash')
 export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
     const youtubeREF = React.useRef<any[]>([]);
     const [selectedVideo, setSelectedVideo] = React.useState('')
+    const [currentTime, setCurrentTime] = React.useState(0)
     const [channels, setChannels] = React.useState([] as IChannel[])
     const [durations, setDurations] = React.useState([] as IDuration[])
     const playerContext = useContext(PlayerStatus)
@@ -41,7 +42,7 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                 videoInfo
             ]
         )
-        console.log(durations)
+        // console.log(durations)
     }
     const onVideoEnd: YouTubeProps['onEnd'] = (event) => {
         setSelectedVideo('')
@@ -62,59 +63,62 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
         console.log(youtubeREF.current)
         if (youtubeREF) {
 
-            let music : IPlayer;
+
+            let music: IPlayer;
             let myBoolean = playerInfoContext.playerInfo?.isPlaying
             selectedVideo === id ?
-            music = {
-                name: videoList.find((v) => v.id.videoId === id)?.snippet.title as string,
-                author: videoList.find((v) => v.id.videoId === id)?.snippet.channelTitle as string,
-                videoId: id,
-                duration: durationHandler(id),
-                isPlaying: !myBoolean,
-                coverUrl: videoList.find((v) => v.id.videoId == id)?.snippet.thumbnails.medium.url as string,
-                isMuted: false,
-                mute: () => {
-                    youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.mute() : console.log('ref notfounded')
-                },
-                unmute: () => {
-                    youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.unMute() : console.log('ref notfounded')
-                },
-                pause : () => {
-                    youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.pauseVideo() : console.log('ref notfounded')
+                music = {
+                    name: videoList.find((v) => v.id.videoId === id)?.snippet.title as string,
+                    author: videoList.find((v) => v.id.videoId === id)?.snippet.channelTitle as string,
+                    videoId: id,
+                    duration: durationHandler(id),
+                    isPlaying: !myBoolean,
+                    coverUrl: videoList.find((v) => v.id.videoId == id)?.snippet.thumbnails.medium.url as string,
+                    isMuted: false,
+                    mute: () => {
+                        youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.mute() : console.log('ref notfounded')
+                    },
+                    unmute: () => {
+                        youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.unMute() : console.log('ref notfounded')
+                    },
+                    pause: () => {
+                        youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.pauseVideo() : console.log('ref notfounded')
+                    }
+                    ,
+                    play: () => {
+                        youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.playVideo() : console.log('ref notfounded')
+                    },
+                    timer: currentTime
+                    ,
+                    index: i
                 }
-                ,
-                play : () => {
-                    youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.playVideo() : console.log('ref notfounded')
+                :
+                music = {
+                    name: videoList.find((v) => v.id.videoId === id)?.snippet.title as string,
+                    author: videoList.find((v) => v.id.videoId === id)?.snippet.channelTitle as string,
+                    videoId: id,
+                    duration: durationHandler(id),
+                    isPlaying: true,
+                    coverUrl: videoList.find((v) => v.id.videoId == id)?.snippet.thumbnails.medium.url as string,
+                    isMuted: false,
+                    mute: () => {
+                        youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.mute() : console.log('ref notfounded')
+                    },
+                    unmute: () => {
+                        youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.unMute() : console.log('ref notfounded')
+                    },
+                    pause: () => {
+                        youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.pauseVideo() : console.log('ref notfounded')
+                    }
+                    ,
+                    play: () => {
+                        youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.playVideo() : console.log('ref notfounded')
+                    }
+                    ,
+                    index: i,
+                    timer: currentTime
                 }
-            ,
-                index: i
-            }
-            :
-            music = {
-                name: videoList.find((v) => v.id.videoId === id)?.snippet.title as string,
-                author: videoList.find((v) => v.id.videoId === id)?.snippet.channelTitle as string,
-                videoId: id,
-                duration: durationHandler(id),
-                isPlaying: true,
-                coverUrl: videoList.find((v) => v.id.videoId == id)?.snippet.thumbnails.medium.url as string,
-                isMuted: false,
-                mute: () => {
-                    youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.mute() : console.log('ref notfounded')
-                },
-                unmute: () => {
-                    youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.unMute() : console.log('ref notfounded')
-                },
-                pause : () => {
-                    youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.pauseVideo() : console.log('ref notfounded')
-                }
-                ,
-                play : () => {
-                    youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.playVideo() : console.log('ref notfounded')
-                }
-            ,
-                index: i
-            }
-            
+
             // const music: IPlayer = {
             //     name: videoList.find((v) => v.id.videoId === id)?.snippet.title as string,
             //     author: videoList.find((v) => v.id.videoId === id)?.snippet.channelTitle as string,
@@ -142,17 +146,17 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
             playerInfoContext.setPlayerInfo(music)
 
             if (selectedVideo === id) {
-               
-                if(!music.isPlaying){
+
+                if (!music.isPlaying) {
                     youtubeREF.current ? youtubeREF.current[i].internalPlayer.pauseVideo() : console.log('no')
-                    const obj = {...playerInfoContext.playerInfo}
+                    const obj = { ...playerInfoContext.playerInfo }
                     obj['isPlaying'] = false
                     playerInfoContext.setPlayerInfo(obj)
                     console.log('paused')
-                } 
-                else{
+                }
+                else {
                     youtubeREF.current ? youtubeREF.current[i].internalPlayer.playVideo() : console.log('no')
-                    const obj = {...playerInfoContext.playerInfo}
+                    const obj = { ...playerInfoContext.playerInfo }
                     obj['isPlaying'] = true
                     playerInfoContext.setPlayerInfo(obj)
                     console.log('played')
@@ -174,24 +178,15 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
             }
         }
     }
-    // const muteFunction = (music: IPlayer) => {
-    //     youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.mute() : console.log('ref notfounded')
-    //     // music.isMuted = true;
-    //     console.log(music)
-    //     playerInfoContext.setPlayerInfo('music')
-    //     console.log(playerInfoContext.playerInfo?.author)
 
-    // }
-    // const unmuteFunction = (music: IPlayer) => {
-    //     console.log('unmuted')
-    //     youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.unMute() : console.log('ref notfounded')
-    //     music.isMuted = false
-    //     console.log(music)
-    // }
 
-    useEffect(() => {
-        console.log(playerInfoContext.playerInfo)
-    }, [playerInfoContext.playerInfo])
+
+    // useEffect(() => {
+    //     console.log(playerInfoContext.playerInfo)
+    //     _.isEmpty(playerInfoContext.playerInfo) ? console.log('context empty')
+    //     :
+    //     currentTimeHandler(playerInfoContext.playerInfo?.index)
+    // }, [playerInfoContext.playerInfo])
     useEffect(() => {
         videoList.forEach((v) => {
             var url;
@@ -213,6 +208,19 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                 })
         })
     }, [videoList])
+    // const currentTimeHandler = (i: any) => {
+    //     setInterval(() => {
+    //         const obj = { ...playerInfoContext.playerInfo }
+    //         // console.log(obj)
+
+    //         youtubeREF.current ? youtubeREF.current[i].internalPlayer.getCurrentTime().then((res: any) => {
+    //             console.log(res)
+    //             obj['timer'] = res;
+    //             playerInfoContext.setPlayerInfo(obj)
+
+    //         }) : console.log('-')
+    //     }, 1000)
+    // }
 
 
 

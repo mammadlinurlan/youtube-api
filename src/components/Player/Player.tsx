@@ -1,16 +1,65 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import './Player.scss'
 import { BiSkipNext, BiSkipPrevious } from 'react-icons/bi'
 import { AiFillPlayCircle, AiFillPauseCircle } from 'react-icons/ai'
 import { GoMute, GoUnmute } from 'react-icons/go'
 import { Player as playerContext } from "../../hooks";
+import { useTimer } from 'react-timer-hook';
 var _ = require('lodash')
 export const Player = () => {
     const player = useContext(playerContext)
+    const [currentTime,setCurrentTime] = useState(0)
+    var sec = 0;
     // useEffect(() => {
-    //     status = player.playerInfo?.isMuted
+    //     _.isEmpty(player.playerInfo) ? console.log('empty')
+    //     :
+    //    timerHandler()
+
+
     //     console.log('deyisdi')
     // }, [player.playerInfo])
+
+    // const timerHandler = () => {
+    //    return setInterval(()=>{
+    //         sec++
+    //         setCurrentTime(sec)
+    //     },1000)
+    // }
+
+    // useEffect(()=>{
+    //     if(_.isEmpty(player.playerInfo))
+    //     {
+    //         clearInterval(timerHandler())
+    //         setCurrentTime(0)
+    //     }
+    //     else{
+    //         if(player.playerInfo?.isPlaying)
+    //         {
+    //             console.log('playing') 
+    //         }
+    //         {
+    //             clearInterval(timerHandler())
+    //             setCurrentTime(0)
+    //         }
+
+    //     }
+    // },[player.playerInfo])
+
+    // function MyTimer( expiryTimestamp : any ) {
+    //     const {
+    //       seconds,
+    //       minutes,
+    //       hours,
+    //       days,
+    //       isRunning,
+    //       start,
+    //       pause,
+    //       resume,
+    //       restart,
+    //     } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+      
+      
+
     return (
         !_.isEmpty(player.playerInfo) ?
         <div className="bottomPlayer">
@@ -52,6 +101,9 @@ export const Player = () => {
                     </div>
                     <div className="bottom">
                         <p>0:00</p>
+                        <p>
+                            {currentTime}
+                        </p>
                         <div className="playerBar"></div>
                         <p>{player.playerInfo?.duration}</p>
                     </div>
