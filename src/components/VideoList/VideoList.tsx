@@ -247,10 +247,10 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                                     }} /> <a
                                         href={`https://www.youtube.com/channel/${v.snippet.channelId}`}
                                         target='_blank'
-                                        style={{ marginLeft: '6px', textDecoration: 'none', color: 'white' }}>{v.snippet.channelTitle.length > 15 ? v.snippet.channelTitle.substring(0,15) : v.snippet.channelTitle}</a></div>
+                                        style={{ marginLeft: '6px', textDecoration: 'none', color: 'white' }}>{v.snippet.channelTitle.length > 14 ? v.snippet.channelTitle.substring(0,14) : v.snippet.channelTitle}</a></div>
                                 </div>
                             </div>
-                            <button className={selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? `btn btn-danger` : 'btn btn-success'} onClick={() => handleVideoClick(i, v.id.videoId)}>{selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? 'PAUSE' : 'PLAY'} MUSIC</button>
+                            <button className={selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? `btn btn-danger playButton` : 'btn btn-success playButton'} onClick={() => handleVideoClick(i, v.id.videoId)}>{selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? 'PAUSE' : 'PLAY'} MUSIC</button>
                         </div>
                     </div>
                 )
