@@ -235,10 +235,10 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                     <div style={{ margin: '15px 0px', display: playerContext.status === null ? 'none' : playerContext.status === false ? 'none' : 'flex', alignItems: 'flex-start' }} key={v.id.videoId} >
                         <YouTube onStateChange={(e) => onVideoStateChange(e)} style={{display:'none'}} ref={el => youtubeREF.current ? youtubeREF.current[i] = el : ''} id="salam" onEnd={(e) => onVideoEnd(e)} videoId={v.id.videoId} opts={opts} onReady={(e) => onPlayerReady(e)} />
                         <img src={v.snippet.thumbnails.high.url as string} />
-                        <div style={{ marginLeft: '14px', display: 'flex', flexDirection: 'column', justifyContent: "space-between", height: '200px', alignItems: 'flex-start' }}>
+                        <div className="singleVideo" style={{ marginLeft: '14px', display: 'flex', flexDirection: 'column', justifyContent: "space-between", height: '200px', alignItems: 'flex-start' }}>
                             <div className="videoInfos">
                                 <div className="topInfo">
-                                    <p className="videoTitle">{v.snippet.title}</p>
+                                    <p className="videoTitle">{v.snippet.title.length > 40 ? v.snippet.title.substring(0,40) : v.snippet.title}</p>
                                     <p className="publishTime">{v.snippet.publishTime.slice(0, 10)} </p>
                                     <p className="publishTime">{durationHandler(v.id.videoId)}</p>
                                     <div style={{ marginTop: '15px' }} className="channelInfos"><img style={{ width: '24px', height: '24px' }} src={channels.find((c) => c.channelId == v.snippet.channelId)?.channelPP} onError={({ currentTarget }) => {
@@ -247,7 +247,7 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                                     }} /> <a
                                         href={`https://www.youtube.com/channel/${v.snippet.channelId}`}
                                         target='_blank'
-                                        style={{ marginLeft: '6px', textDecoration: 'none', color: 'white' }}>{v.snippet.channelTitle}</a></div>
+                                        style={{ marginLeft: '6px', textDecoration: 'none', color: 'white' }}>{v.snippet.channelTitle.length > 15 ? v.snippet.channelTitle.substring(0,15) : v.snippet.channelTitle}</a></div>
                                 </div>
                             </div>
                             <button className={selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? `btn btn-danger` : 'btn btn-success'} onClick={() => handleVideoClick(i, v.id.videoId)}>{selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? 'PAUSE' : 'PLAY'} MUSIC</button>

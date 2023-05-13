@@ -68,7 +68,7 @@ export const Player = () => {
                     <img src={player.playerInfo?.coverUrl} />
                     <div className="playerLeftInfo">
                         <p className="title">
-                            {player.playerInfo?.name}
+                            {player.playerInfo!.name.length > 30 ? player.playerInfo?.name.substring(0,30) : player.playerInfo?.name}
                         </p>
                         <p className="author">
                             {player.playerInfo?.author}
@@ -101,9 +101,7 @@ export const Player = () => {
                     </div>
                     <div className="bottom">
                         <p>0:00</p>
-                        <p>
-                            {currentTime}
-                        </p>
+                        
                         <div className="playerBar"></div>
                         <p>{player.playerInfo?.duration}</p>
                     </div>

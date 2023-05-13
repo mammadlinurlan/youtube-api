@@ -28,3 +28,8 @@ input{
 form{
     margin-top: 10px;
 }
+@media screen and (max-width:767px){
+    .searchButton{
+        width: 22% !important;
+    }
+}

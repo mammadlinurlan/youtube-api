@@ -29,3 +29,22 @@
         margin: 0;
     }
 }
+
+@media screen and (max-width:767px){
+    .videoWrapper{
+        img{
+            height: 160px;
+            width: 210px;
+            
+        }
+    }
+    .singleVideo{
+        justify-content: flex-start !important;
+        .videoTitle{
+            font-size: 15px;
+        }
+        .channelInfos{
+            margin-top: 4px !important;
+        }
+    }
+}
