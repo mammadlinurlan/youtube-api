@@ -215,7 +215,7 @@ return (
         {videoList.map((v, i) => {
             return (
                 <div style={{ margin: '15px 0px', display: playerContext.status === null ? 'none' : playerContext.status === false ? 'none' : 'flex', alignItems: 'flex-start' }} key={v.id.videoId} >
-                    <YouTube onStateChange={(e) => onVideoStateChange(e)} style={{display:'none'}} ref={el => youtubeREF.current ? youtubeREF.current[i] = el : ''} id="salam" onEnd={(e) => onVideoEnd(e)} videoId={v.id.videoId} opts={opts} onReady={(e) => onPlayerReady(e)} />
+                    <YouTube onStateChange={(e) => onVideoStateChange(e)}  ref={el => youtubeREF.current ? youtubeREF.current[i] = el : ''} id="salam" onEnd={(e) => onVideoEnd(e)} videoId={v.id.videoId} opts={opts} onReady={(e) => onPlayerReady(e)} />
                     <img src={v.snippet.thumbnails.high.url as string} />
                     <div className="singleVideo" style={{ marginLeft: '14px', display: 'flex', flexDirection: 'column', justifyContent: "space-between", height: '200px', alignItems: 'flex-start' }}>
                         <div className="videoInfos">

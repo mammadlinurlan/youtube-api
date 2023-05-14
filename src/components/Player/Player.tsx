@@ -75,7 +75,7 @@ export const Player = () => {
                                 player.setPlayerInfo(myObj)
                             }} />
                     }
-                    <input min={1} value={player.playerInfo?.volume} defaultValue={player.playerInfo?.volume} max={100} 
+                    <input min={1}  defaultValue={player.playerInfo?.volume} max={100} 
                     onChange={(e)=>{setVolume(Number(e.target.value))}} 
                     onMouseUp={(e)=>{
                         const obj = {...player.playerInfo}
