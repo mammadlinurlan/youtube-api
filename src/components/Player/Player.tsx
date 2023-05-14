@@ -82,7 +82,7 @@ export const Player = () => {
                         obj['volume'] = volume
                         player.setPlayerInfo(obj)
                     }} type="range" id="volume-slider"/>
-                    <p style={{color:'white'}}>{player.playerInfo?.volume}</p>
+                    
                 </div>
             </div>
 
