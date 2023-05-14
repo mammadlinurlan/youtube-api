@@ -7,11 +7,29 @@ import { Player as playerContext } from "../../hooks";
 import { useTimer } from 'react-timer-hook';
 var _ = require('lodash')
 export const Player = () => {
-    const player = useContext(playerContext)
-    const [volume,setVolume] = useState<any>()
-  
-      
-      
+    const player = useContext(playerContext);
+    const [volume, setVolume] = useState<any>();
+    const [currentTime, setCurrentTime] = React.useState(0);
+    const [intervalId, setIntervalId] = React.useState<null | number>(null);
+
+    // React.useEffect(()=>{
+    //     if(player.playerInfo?.isPlaying) {
+    //         const interval = setInterval(()=>{
+    //             setCurrentTime(currentTime+1);
+    //         }, 1000)
+    //         setIntervalId(Number(interval));
+    //     }
+    // },[player.playerInfo?.isPlaying])
+
+    // React.useEffect(()=>{
+    //     if(player.playerInfo?.isPlaying === false && intervalId) {
+    //         console.log("else ishledi");
+    //         clearInterval(intervalId);
+    //         setIntervalId(null);
+    //     }
+    // },[player.playerInfo?.isPlaying])
+
+    // console.log("idd",intervalId)
 
     return (
         !_.isEmpty(player.playerInfo) ?

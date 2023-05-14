@@ -19,6 +19,7 @@ function App() {
         q: keyword
       }
     })
+    console.log(response.data.items)
     setVideoList(response.data.items)
   }
 
