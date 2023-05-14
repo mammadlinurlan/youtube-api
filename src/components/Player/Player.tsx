@@ -8,55 +8,8 @@ import { useTimer } from 'react-timer-hook';
 var _ = require('lodash')
 export const Player = () => {
     const player = useContext(playerContext)
-    const [currentTime,setCurrentTime] = useState(0)
-    var sec = 0;
-    // useEffect(() => {
-    //     _.isEmpty(player.playerInfo) ? console.log('empty')
-    //     :
-    //    timerHandler()
-
-
-    //     console.log('deyisdi')
-    // }, [player.playerInfo])
-
-    // const timerHandler = () => {
-    //    return setInterval(()=>{
-    //         sec++
-    //         setCurrentTime(sec)
-    //     },1000)
-    // }
-
-    // useEffect(()=>{
-    //     if(_.isEmpty(player.playerInfo))
-    //     {
-    //         clearInterval(timerHandler())
-    //         setCurrentTime(0)
-    //     }
-    //     else{
-    //         if(player.playerInfo?.isPlaying)
-    //         {
-    //             console.log('playing') 
-    //         }
-    //         {
-    //             clearInterval(timerHandler())
-    //             setCurrentTime(0)
-    //         }
-
-    //     }
-    // },[player.playerInfo])
-
-    // function MyTimer( expiryTimestamp : any ) {
-    //     const {
-    //       seconds,
-    //       minutes,
-    //       hours,
-    //       days,
-    //       isRunning,
-    //       start,
-    //       pause,
-    //       resume,
-    //       restart,
-    //     } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+    const [volume,setVolume] = useState<any>()
+  
       
       
 
@@ -122,6 +75,14 @@ export const Player = () => {
                                 player.setPlayerInfo(myObj)
                             }} />
                     }
+                    <input min={1} value={player.playerInfo?.volume} defaultValue={player.playerInfo?.volume} max={100} 
+                    onChange={(e)=>{setVolume(Number(e.target.value))}} 
+                    onMouseUp={(e)=>{
+                        const obj = {...player.playerInfo}
+                        obj['volume'] = volume
+                        player.setPlayerInfo(obj)
+                    }} type="range" id="volume-slider"/>
+                    <p style={{color:'white'}}>{player.playerInfo?.volume}</p>
                 </div>
             </div>
 

@@ -17,7 +17,7 @@ export const Search = (props : any) => {
             player.setPlayerInfo({})
            
         }}>
-            <input defaultValue={inputValue.current}  className="form-control searchInput" onChange={(e) => {
+            <input  defaultValue={inputValue.current}  className="form-control searchInput" onChange={(e) => {
                 inputValue.current = e.target.value
 
             }} placeholder="Search" required />

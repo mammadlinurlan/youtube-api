@@ -53,7 +53,8 @@ export interface IPlayer{
     index : any,
     play : any,
     pause : any,
-    timer : any
+    timer : any,
+    volume : number
     // play : ()=>{},
     // pause : ()=>{}
 }

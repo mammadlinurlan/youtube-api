@@ -42,6 +42,7 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                 videoInfo
             ]
         )
+        console.log(event.target)
         // console.log(durations)
     }
     const onVideoEnd: YouTubeProps['onEnd'] = (event) => {
@@ -90,7 +91,8 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                     },
                     timer: currentTime
                     ,
-                    index: i
+                    index: i,
+                    volume: playerInfoContext.playerInfo?.volume ? playerInfoContext.playerInfo.volume : 50
                 }
                 :
                 music = {
@@ -116,34 +118,12 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                     }
                     ,
                     index: i,
-                    timer: currentTime
+                    timer: currentTime,
+                    volume: playerInfoContext.playerInfo?.volume ? playerInfoContext.playerInfo.volume : 50
                 }
 
-            // const music: IPlayer = {
-            //     name: videoList.find((v) => v.id.videoId === id)?.snippet.title as string,
-            //     author: videoList.find((v) => v.id.videoId === id)?.snippet.channelTitle as string,
-            //     videoId: id,
-            //     duration: durationHandler(id),
-            //     isPlaying: true,
-            //     coverUrl: videoList.find((v) => v.id.videoId == id)?.snippet.thumbnails.medium.url as string,
-            //     isMuted: false,
-            //     mute: () => {
-            //         youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.mute() : console.log('ref notfounded')
-            //     },
-            //     unmute: () => {
-            //         youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.unMute() : console.log('ref notfounded')
-            //     },
-            //     pause : () => {
-            //         youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.pauseVideo() : console.log('ref notfounded')
-            //     }
-            //     ,
-            //     play : () => {
-            //         youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.playVideo() : console.log('ref notfounded')
-            //     }
-            // ,
-            //     index: i
-            // }
             playerInfoContext.setPlayerInfo(music)
+            youtubeREF.current ? youtubeREF.current[music.index].internalPlayer.getVolume().then((res: any) => { console.log(res) }) : console.log('ref notfounded')
 
             if (selectedVideo === id) {
 
@@ -182,13 +162,13 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
 
 
     useEffect(() => {
-        
-        _.isEmpty(playerInfoContext.playerInfo) ? 
-        youtubeREF.current ? youtubeREF.current.forEach(v => {
-            v.internalPlayer.stopVideo()
-        }) : console.log('no')
-        :
-        console.log('context empty')
+
+        _.isEmpty(playerInfoContext.playerInfo) ?
+            youtubeREF.current ? youtubeREF.current.forEach(v => {
+                v.internalPlayer.stopVideo()
+            }) : console.log('no')
+            :
+            console.log('context empty')
     }, [playerInfoContext.playerInfo])
     useEffect(() => {
         videoList.forEach((v) => {
@@ -211,53 +191,52 @@ export const VideoList: React.FC<IVideos> = ({ videoList }: IVideos) => {
                 })
         })
     }, [videoList])
-    // const currentTimeHandler = (i: any) => {
-    //     setInterval(() => {
-    //         const obj = { ...playerInfoContext.playerInfo }
-    //         // console.log(obj)
 
-    //         youtubeREF.current ? youtubeREF.current[i].internalPlayer.getCurrentTime().then((res: any) => {
-    //             console.log(res)
-    //             obj['timer'] = res;
-    //             playerInfoContext.setPlayerInfo(obj)
+    useEffect(() => {
+        volumeHandler()
+    }, [playerInfoContext.playerInfo?.volume])
 
-    //         }) : console.log('-')
-    //     }, 1000)
-    // }
-
-
-
-    return (
-        <div className="videoWrapper" >
-            <div style={{ height: '90vh', display: playerContext.status === null ? 'none' : playerContext.status === false ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center' }} className="preloader">
-                <img style={{ width: '40px', height: '40px' }} src='test.svg' />
-            </div>
-
-            {videoList.map((v, i) => {
-                return (
-                    <div style={{ margin: '15px 0px', display: playerContext.status === null ? 'none' : playerContext.status === false ? 'none' : 'flex', alignItems: 'flex-start' }} key={v.id.videoId} >
-                        <YouTube onStateChange={(e) => onVideoStateChange(e)} style={{display:'none'}} ref={el => youtubeREF.current ? youtubeREF.current[i] = el : ''} id="salam" onEnd={(e) => onVideoEnd(e)} videoId={v.id.videoId} opts={opts} onReady={(e) => onPlayerReady(e)} />
-                        <img src={v.snippet.thumbnails.high.url as string} />
-                        <div className="singleVideo" style={{ marginLeft: '14px', display: 'flex', flexDirection: 'column', justifyContent: "space-between", height: '200px', alignItems: 'flex-start' }}>
-                            <div className="videoInfos">
-                                <div className="topInfo">
-                                    <p className="videoTitle">{v.snippet.title.length > 40 ? v.snippet.title.substring(0,40) : v.snippet.title}</p>
-                                    <p className="publishTime">{v.snippet.publishTime.slice(0, 10)} </p>
-                                    <p className="publishTime">{durationHandler(v.id.videoId)}</p>
-                                    <div style={{ marginTop: '15px' }} className="channelInfos"><img style={{ width: '24px', height: '24px' }} src={channels.find((c) => c.channelId == v.snippet.channelId)?.channelPP} onError={({ currentTarget }) => {
-                                        currentTarget.onerror = null;
-                                        currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg';
-                                    }} /> <a
-                                        href={`https://www.youtube.com/channel/${v.snippet.channelId}`}
-                                        target='_blank'
-                                        style={{ marginLeft: '6px', textDecoration: 'none', color: 'white' }}>{v.snippet.channelTitle.length > 14 ? v.snippet.channelTitle.substring(0,14) : v.snippet.channelTitle}</a></div>
-                                </div>
-                            </div>
-                            <button className={selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? `btn btn-danger playButton` : 'btn btn-success playButton'} onClick={() => handleVideoClick(i, v.id.videoId)}>{selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? 'PAUSE' : 'PLAY'} MUSIC</button>
-                        </div>
-                    </div>
-                )
-            })}
+    const volumeHandler = (i?: any) => {
+        _.isEmpty(playerInfoContext.playerInfo) ? console.log('no context')
+            :
+            youtubeREF.current ? youtubeREF.current.forEach(v => {
+                v.internalPlayer.setVolume(playerInfoContext.playerInfo?.volume)
+                
+    })
+    :
+                console.log('-')
+}
+return (
+    <div className="videoWrapper" >
+        <div style={{ height: '90vh', display: playerContext.status === null ? 'none' : playerContext.status === false ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center' }} className="preloader">
+            <img style={{ width: '40px', height: '40px' }} src='test.svg' />
         </div>
-    )
+
+        {videoList.map((v, i) => {
+            return (
+                <div style={{ margin: '15px 0px', display: playerContext.status === null ? 'none' : playerContext.status === false ? 'none' : 'flex', alignItems: 'flex-start' }} key={v.id.videoId} >
+                    <YouTube onStateChange={(e) => onVideoStateChange(e)} style={{display:'none'}} ref={el => youtubeREF.current ? youtubeREF.current[i] = el : ''} id="salam" onEnd={(e) => onVideoEnd(e)} videoId={v.id.videoId} opts={opts} onReady={(e) => onPlayerReady(e)} />
+                    <img src={v.snippet.thumbnails.high.url as string} />
+                    <div className="singleVideo" style={{ marginLeft: '14px', display: 'flex', flexDirection: 'column', justifyContent: "space-between", height: '200px', alignItems: 'flex-start' }}>
+                        <div className="videoInfos">
+                            <div className="topInfo">
+                                <p className="videoTitle">{v.snippet.title.length > 40 ? v.snippet.title.substring(0, 40) : v.snippet.title}</p>
+                                <p className="publishTime">{v.snippet.publishTime.slice(0, 10)} </p>
+                                <p className="publishTime">{durationHandler(v.id.videoId)}</p>
+                                <div style={{ marginTop: '15px' }} className="channelInfos"><img style={{ width: '24px', height: '24px' }} src={channels.find((c) => c.channelId == v.snippet.channelId)?.channelPP} onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null;
+                                    currentTarget.src = 'https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg';
+                                }} /> <a
+                                    href={`https://www.youtube.com/channel/${v.snippet.channelId}`}
+                                    target='_blank'
+                                    style={{ marginLeft: '6px', textDecoration: 'none', color: 'white' }}>{v.snippet.channelTitle.length > 14 ? v.snippet.channelTitle.substring(0, 14) : v.snippet.channelTitle}</a></div>
+                            </div>
+                        </div>
+                        <button className={selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? `btn btn-danger playButton` : 'btn btn-success playButton'} onClick={() => handleVideoClick(i, v.id.videoId)}>{selectedVideo === v.id.videoId && playerInfoContext.playerInfo?.isPlaying ? 'PAUSE' : 'PLAY'} MUSIC</button>
+                    </div>
+                </div>
+            )
+        })}
+    </div>
+)
 }
